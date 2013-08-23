@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VpGridDialog</class>
+ <widget class="QDialog" name="VpGridDialog">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>380</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>380</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Grid Display Properties</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>250</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>341</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="xAlignmentLineEdit">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;X Position Value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="xSpacingLabel">
+      <property name="text">
+       <string>x Spacing:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="ySpacingLabel">
+      <property name="text">
+       <string>y Spacing:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QLabel" name="sytleLabel">
+      <property name="text">
+       <string>Style:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="xAlignmentLabel">
+      <property name="text">
+       <string>x Alignment:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="ySpacingLineEdit">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vertical Spacing Value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QComboBox" name="styleComboBox">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid Display Style&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Line</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Dot</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Cross</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="xResolutionLabel">
+      <property name="text">
+       <string>x Resolution:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="yResolutionLineEdit">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vertical Resolution (in pixels)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="multiplierLabel">
+      <property name="text">
+       <string>Multiplier:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="xResolutionLineEdit">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Horizontal Resolution (in pixels)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QComboBox" name="stateComboBox">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid Display State&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>On</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Off</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Hidden</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="yAlignmentLabel">
+      <property name="text">
+       <string>y Alignment:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QLabel" name="stateLabel">
+      <property name="text">
+       <string>State:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="multiplierLineEdit">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid Display Interval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="yResolutionLabel">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>y Resolution:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="yAlignmentLineEdit">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Y Position Value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="xSpacingLineEdit">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Horizontal Spacing Value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>6</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="2">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>6</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="3" column="2">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>6</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="6" column="2">
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>6</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="3">
+     <widget class="QLabel" name="referenceStateLabel">
+      <property name="text">
+       <string>Reference State: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QComboBox" name="referenceStateComboBox">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid Reference State&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>On</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Off</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QLabel" name="colorLabel">
+      <property name="text">
+       <string>Color:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QWidget" name="colorWell" native="true">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid Color&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="3">
+     <widget class="QLabel" name="referenceStyleLabel">
+      <property name="text">
+       <string>Reference Style:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="3">
+     <widget class="QLabel" name="referenceColorLabel">
+      <property name="text">
+       <string>Reference Color:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="4">
+     <widget class="QComboBox" name="referenceStyleComboBox">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid Reference Style&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Square</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Circle</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Cross</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="6" column="4">
+     <widget class="QWidget" name="referenceColorWell" native="true">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid Reference Color&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>xSpacingLineEdit</tabstop>
+  <tabstop>ySpacingLineEdit</tabstop>
+  <tabstop>xAlignmentLineEdit</tabstop>
+  <tabstop>yAlignmentLineEdit</tabstop>
+  <tabstop>xResolutionLineEdit</tabstop>
+  <tabstop>yResolutionLineEdit</tabstop>
+  <tabstop>multiplierLineEdit</tabstop>
+  <tabstop>stateComboBox</tabstop>
+  <tabstop>styleComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>VpGridDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>VpGridDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
