@@ -25,7 +25,7 @@
 #include <QString>
 
 // Include QtVp header files.
-#include "auutil.h"
+#include "vputil.h"
 #include "vpcoord.h"
 
 int VpCoord::g_resolution = 1;
@@ -57,7 +57,7 @@ double VpCoord::internalToWorld(const int x)
 
 int VpCoord::worldToInternal(const double x)
 {
-    return AuUtil::round((x) * g_resolution);
+    return VpUtil::round((x) * g_resolution);
 }
 
 const QString VpCoord::toString()

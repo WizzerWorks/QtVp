@@ -21,27 +21,15 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // COPYRIGHT_END
 
-#ifndef __AUUTIL_H_
-#define __AUUTIL_H_
+// Include QtVp header files.
+#include "vputil.h"
 
-class AuUtil
+VpUtil::VpUtil()
 {
-  public:
+    // Do nothing extra.
+}
 
-    /**
-     * @brief Default constructor.
-     */
-    AuUtil();
-
-    /*
-     * Round off a floating-point value;
-     *
-     * @param value The value to round off.
-     *
-     * @return A value will be returned, rounded to the nearest
-     * integer.
-     */
-    static int round(double value);
-};
-
-#endif // A__UUTIL_H_
+int VpUtil::round(double value)
+{
+    return ((int) ((value) < 0.0 ? (value) - 0.5 : (value) + 0.5));
+}

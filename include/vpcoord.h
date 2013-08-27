@@ -25,7 +25,7 @@
 #define __VPCOORD_H_
 
 // Include QtVp header files.
-#include "autypes.h"
+#include "vptypes.h"
 
 class QString;
 

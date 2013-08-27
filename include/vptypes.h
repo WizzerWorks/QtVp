@@ -21,15 +21,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // COPYRIGHT_END
 
-// Include QtVp header files.
-#include "auutil.h"
+#ifndef __VPTYPES_H_
+#define __VPTYPES_H_
 
-AuUtil::AuUtil()
-{
-    // Do nothing extra.
-}
+#ifndef NULL
+#define NULL 0
+#endif
 
-int AuUtil::round(double value)
-{
-    return ((int) ((value) < 0.0 ? (value) - 0.5 : (value) + 0.5));
-}
+#endif // __VPTYPES_H_

@@ -24,7 +24,7 @@
 #ifndef __VPGC_H_
 #define __VPGC_H_
 
-class QPaintDevice;
+class QPainter;
 class VpViewport;
 
 class VpGC
@@ -59,16 +59,16 @@ class VpGC
     /**
      * @brief Get the graphics context.
      *
-     * @return A pointer to the <code>QPaintDevice</code> is returned. May be <b>null</b>.
+     * @return A pointer to the <code>QPainter</code> is returned. May be <b>null</b>.
      */
-    QPaintDevice *getGC() { return m_gc; }
+    QPainter *getGC() { return m_gc; }
 
     /**
      * @brief Set the graphics context.
      *
-     * @param gc A pointer to a <code>QPaintDevice</code>. May be <b>null</b>.
+     * @param gc A pointer to a <code>QPainter</code>. May be <b>null</b>.
      */
-    void setGC(QPaintDevice *gc) { m_gc = gc; }
+    void setGC(QPainter *gc) { m_gc = gc; }
 
   protected:
 
@@ -76,7 +76,7 @@ class VpGC
     const VpViewport *m_viewport;
 
     /** The Qt painter context associated with this viewport. */
-    QPaintDevice *m_gc;
+    QPainter *m_gc;
 };
 
 #endif // __VPGC_H_

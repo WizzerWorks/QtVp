@@ -21,11 +21,22 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // COPYRIGHT_END
 
-#ifndef __AUTYPES_H_
-#define __AUTYPES_H_
+// Include QtVp header files.
+#include "vpcolor.h"
 
-#ifndef NULL
-#define NULL 0
-#endif
+VpColor::VpColor()
+  : QColor(0, 0, 0, 255)
+{
+    // Do nothing extra.
+}
 
-#endif // __AUTYPES_H_
+VpColor::VpColor(QColor color)
+    : QColor(color)
+{
+    // Do nothing extra.
+}
+
+VpColor::~VpColor()
+{
+    // Do nothing.
+}

@@ -22,7 +22,7 @@
 // COPYRIGHT_END
 
 // Include QtVp library header files.
-#include "auutil.h"
+#include "vputil.h"
 #include "mainwindow.h"
 #include "vpgriddialog.h"
 #include "ui_mainwindow.h"
@@ -34,17 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
-   /*
-    QGraphicsScene scene;
-    scene.addText("Hello, world!");
-
-    m_view = new AuGraphicsView();
-    m_view->init();
-    m_view->setScene(&scene);
-
-    setCentralWidget(m_view);
-    */
-
     m_view = new VpGraphicsView();
 
     // Set up default viewport and grid.
@@ -53,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_vp->getGrid()->setStyle(VpGrid::STYLE_LINE);
     m_vp->getGrid()->setXSpacing(10);
     m_vp->getGrid()->setYSpacing(10);
-    m_vp->getGrid()->setColor(AuColor(QColor(145, 145 ,145, 255)));
+    m_vp->getGrid()->setColor(VpColor(QColor(145, 145 ,145, 255)));
     m_vp->getGrid()->setReferenceState(VpGrid::REFSTATE_ON);
     QString cmd = m_vp->toString();
 
@@ -96,10 +85,10 @@ void MainWindow::zoomIn()
     // Zoom in by 50%.
     float halfx = (x_max - x_min) / 2;
     float halfy = (y_max - y_min) / 2;
-    x_min = AuUtil::round(x_min + halfx/2);
-    x_max = AuUtil::round(x_max - halfx/2);
-    y_min = AuUtil::round(y_min + halfy/2);
-    y_max = AuUtil::round(y_max - halfy/2);
+    x_min = VpUtil::round(x_min + halfx/2);
+    x_max = VpUtil::round(x_max - halfx/2);
+    y_min = VpUtil::round(y_min + halfy/2);
+    y_max = VpUtil::round(y_max - halfy/2);
 
     m_vp->setWorldCoords(x_min, y_min, x_max, y_max);
 
@@ -117,10 +106,10 @@ void MainWindow::zoomOut()
     // Zoom out by 50%.
     float halfx = (x_max - x_min) / 2;
     float halfy = (y_max - y_min) / 2;
-    x_min = AuUtil::round(x_min - halfx/2);
-    x_max = AuUtil::round(x_max + halfx/2);
-    y_min = AuUtil::round(y_min - halfy/2);
-    y_max = AuUtil::round(y_max + halfy/2);
+    x_min = VpUtil::round(x_min - halfx/2);
+    x_max = VpUtil::round(x_max + halfx/2);
+    y_min = VpUtil::round(y_min - halfy/2);
+    y_max = VpUtil::round(y_max + halfy/2);
 
     m_vp->setWorldCoords(x_min, y_min, x_max, y_max);
 
@@ -138,11 +127,11 @@ void MainWindow::center()
     // Center the world coordinate system, placing (0,0)
     // in the middle of the widget.
     float halfx = (x_max - x_min) / 2;
-    x_min = AuUtil::round(-halfx);
-    x_max = AuUtil::round(halfx);
+    x_min = VpUtil::round(-halfx);
+    x_max = VpUtil::round(halfx);
     float halfy = (y_max - y_min) / 2;
-    y_min = AuUtil::round(-halfy);
-    y_max = AuUtil::round(halfy);
+    y_min = VpUtil::round(-halfy);
+    y_max = VpUtil::round(halfy);
 
     m_vp->setWorldCoords(x_min, y_min, x_max, y_max);
 
@@ -223,7 +212,7 @@ void MainWindow::on_actionGrid_triggered()
         m_vp->getGrid()->setMultiplier(multiplier);
         m_vp->getGrid()->setState(state);
         m_vp->getGrid()->setStyle(style);
-        m_vp->getGrid()->setColor(AuColor(color));
+        m_vp->getGrid()->setColor(VpColor(color));
         m_vp->getGrid()->setReferenceState(refState);
         m_vp->getGrid()->setReferenceStyle(refStyle);
         m_vp->getGrid()->setReferenceColor(refColor);

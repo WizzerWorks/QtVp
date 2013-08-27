@@ -26,7 +26,7 @@
 #include <QPoint>
 
 // Include QtVp heaeder files.
-#include "auutil.h"
+#include "vputil.h"
 #include "vpgrid.h"
 #include "vpgc.h"
 #include "vpgraphics2d.h"
@@ -95,8 +95,8 @@ bool VpGrid::snapToGrid(int *x, int *y)
         sy = getYSpacing();
         tx = getXAlignment();
         ty = getYAlignment();
-        *x = AuUtil::round(((double)(*x - tx))/((double)(sx))) * sx + tx;
-        *y = AuUtil::round(((double)(*y - ty))/((double)(sy))) * sy + ty;
+        *x = VpUtil::round(((double)(*x - tx))/((double)(sx))) * sx + tx;
+        *y = VpUtil::round(((double)(*y - ty))/((double)(sy))) * sy + ty;
     }
 
     status = true;
@@ -148,21 +148,10 @@ void VpGrid::drawLineGrid(GridContext &gridGC)
 {
     int x,y;
     VpGC *vpgc = gridGC.m_gc;
-    QPainter *gc = new QPainter(vpgc->getGC());
-    gc->setRenderHint(QPainter::Antialiasing, true);
+    QPainter *gc = vpgc->getGC();
 
-    // Set the world coordinate extent.
-    const VpViewport *vp = vpgc->getViewport();
-    QRect extent;
-    int left = ((VpGraphics2D *)vp)->getWxmin();
-    int right = ((VpGraphics2D *)vp)->getWxmax();
-    int top = ((VpGraphics2D *)vp)->getWymax();
-    int bottom = ((VpGraphics2D *)vp)->getWymin();
-    extent.setLeft(left);
-    extent.setRight(right);
-    extent.setTop(top);
-    extent.setBottom(bottom);
-    gc->setWindow(extent);
+    // Assuming QPainter has already established begin().
+    gc->setRenderHint(QPainter::Antialiasing, true);
 
     // Set the pen.
     QPen pen;
@@ -193,28 +182,17 @@ void VpGrid::drawLineGrid(GridContext &gridGC)
     // Flush graphics to display.
     //gc.flush();
 
-    delete gc;
+    //delete gc;
 }
 
 void VpGrid::drawDotGrid(GridContext &gridGC)
 {
     int x,y;
     VpGC *vpgc = gridGC.m_gc;
-    QPainter *gc = new QPainter(vpgc->getGC());
-    gc->setRenderHint(QPainter::Antialiasing, true);
+    QPainter *gc = vpgc->getGC();
 
-    // Set the world coordinate extent.
-    const VpViewport *vp = vpgc->getViewport();
-    QRect extent;
-    int left = ((VpGraphics2D *)vp)->getWxmin();
-    int right = ((VpGraphics2D *)vp)->getWxmax();
-    int top = ((VpGraphics2D *)vp)->getWymax();
-    int bottom = ((VpGraphics2D *)vp)->getWymin();
-    extent.setLeft(left);
-    extent.setRight(right);
-    extent.setTop(top);
-    extent.setBottom(bottom);
-    gc->setWindow(extent);
+    // Assuming QPainter has already established begin().
+    gc->setRenderHint(QPainter::Antialiasing, true);
 
     // Set the pen.
     QPen pen;
@@ -233,28 +211,17 @@ void VpGrid::drawDotGrid(GridContext &gridGC)
     // Flush graphics to display.
     //gc.flush();
 
-    delete gc;
+    //delete gc;
 }
 
 void VpGrid::drawCrossGrid(GridContext &gridGC)
 {
     int x,y;
     VpGC *vpgc = gridGC.m_gc;
-    QPainter *gc = new QPainter(vpgc->getGC());
-    gc->setRenderHint(QPainter::Antialiasing, true);
+    QPainter *gc = vpgc->getGC();
 
-    // Set the world coordinate extent.
-    const VpViewport *vp = vpgc->getViewport();
-    QRect extent;
-    int left = ((VpGraphics2D *)vp)->getWxmin();
-    int right = ((VpGraphics2D *)vp)->getWxmax();
-    int top = ((VpGraphics2D *)vp)->getWymax();
-    int bottom = ((VpGraphics2D *)vp)->getWymin();
-    extent.setLeft(left);
-    extent.setRight(right);
-    extent.setTop(top);
-    extent.setBottom(bottom);
-    gc->setWindow(extent);
+    // Assuming QPainter has already established begin().
+    gc->setRenderHint(QPainter::Antialiasing, true);
 
     // Set the pen.
     QPen pen;
@@ -278,28 +245,17 @@ void VpGrid::drawCrossGrid(GridContext &gridGC)
     // Flush graphics to display.
     //gc.flush();
 
-    delete gc;
+    //delete gc;
 }
 
  void VpGrid::drawReference(GridContext &gridGC)
  {
      int x,y;
      VpGC *vpgc = gridGC.m_gc;
-     QPainter *gc = new QPainter(vpgc->getGC());
-     gc->setRenderHint(QPainter::Antialiasing, true);
+     QPainter *gc = vpgc->getGC();
 
-     // Set the world coordinate extent.
-     const VpViewport *vp = vpgc->getViewport();
-     QRect extent;
-     int left = ((VpGraphics2D *)vp)->getWxmin();
-     int right = ((VpGraphics2D *)vp)->getWxmax();
-     int top = ((VpGraphics2D *)vp)->getWymax();
-     int bottom = ((VpGraphics2D *)vp)->getWymin();
-     extent.setLeft(left);
-     extent.setRight(right);
-     extent.setTop(top);
-     extent.setBottom(bottom);
-     gc->setWindow(extent);
+     // Assuming QPainter has already established begin().
+     gc->setRenderHint(QPainter::Antialiasing, true);
 
      if (m_referenceStyle == VpGrid::REFSTYLE_SQUARE)
      {
@@ -349,7 +305,7 @@ void VpGrid::drawCrossGrid(GridContext &gridGC)
          gc->drawLines(cross, 2);
      }
 
-     delete gc;
+     //delete gc;
  }
 
 #if 0

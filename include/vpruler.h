@@ -21,15 +21,15 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // COPYRIGHT_END
 
-#ifndef __AURULER_H_
-#define __AURULER_H_
+#ifndef __VPRULER_H_
+#define __VPRULER_H_
 
 // Include Qt header files.
 #include <QtWidgets>
 
 #define RULER_BREADTH 20
 
-class AuRuler : public QWidget
+class VpRuler : public QWidget
 {
     Q_OBJECT
 
@@ -42,8 +42,8 @@ class AuRuler : public QWidget
 
     enum RulerType { Horizontal, Vertical };
 
-    AuRuler(QWidget* parent, RulerType rulerType);
-    virtual ~AuRuler();
+    VpRuler(QWidget* parent, RulerType rulerType);
+    virtual ~VpRuler();
 
     QSize minimumSizeHint() const;
     RulerType rulerType() const;
@@ -79,4 +79,4 @@ class AuRuler : public QWidget
     bool      m_drawText;
 };
 
-#endif // __AURULER_H_
+#endif // __VPRULER_H_

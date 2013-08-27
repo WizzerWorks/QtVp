@@ -28,12 +28,12 @@
 #include <QObject>
 
 // Include Viewport header files.
-#include "autypes.h"
+#include "vptypes.h"
 #include "vpcoord.h"
 #include "vpgrid.h"
 #include "vpviewport.h"
 #include "vpgc.h"
-#include "auruler.h"
+#include "vpruler.h"
 
 // Forward declarations.
 class QRect;
@@ -266,9 +266,9 @@ class VpGraphics2D : public VpViewport
      * y position of the coordinate. <b>vpname</b> is the name of
      * the viewport.
      */
-    void coordChanged(const QString coord);
+    void coordChanged(const QString &coord);
 
-    void updateStatus(const QString coord);
+    void updateStatus(const QString &coord);
 
   protected slots:
 
@@ -332,6 +332,8 @@ class VpGraphics2D : public VpViewport
     QPoint m_rubberBandOrigin;
     // Flag indicating if currently rubber-banding.
     bool m_rubberBandIsShown;
+
+    QPainter *m_painter;
 
 };
 

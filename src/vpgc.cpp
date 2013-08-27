@@ -22,7 +22,7 @@
 // COPYRIGHT_END
 
 // Include QtVp header files.
-#include "autypes.h"
+#include "vptypes.h"
 #include "vpgc.h"
 
 VpGC::VpGC()

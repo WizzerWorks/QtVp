@@ -28,7 +28,7 @@
 #include <QScrollArea>
 
 // Include QtVp header files.
-#include "auruler.h"
+#include "vpruler.h"
 
 class VpGraphicsView : public QScrollArea
 {
@@ -48,9 +48,9 @@ class VpGraphicsView : public QScrollArea
   private:
 
     /** Horizontal ruler. */
-    AuRuler *m_horizontalRuler;
+    VpRuler *m_horizontalRuler;
     /** Vertical ruler. */
-    AuRuler *m_verticalRuler;
+    VpRuler *m_verticalRuler;
 
 };
 

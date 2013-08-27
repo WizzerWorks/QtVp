@@ -45,8 +45,8 @@ void VpGraphicsView::init(QWidget *widget)
     gridLayout->setSpacing(0);
     gridLayout->setMargin(0);
 
-    m_horizontalRuler = new AuRuler(this, AuRuler::Horizontal);
-    m_verticalRuler = new AuRuler(this, AuRuler::Vertical);
+    m_horizontalRuler = new VpRuler(this, VpRuler::Horizontal);
+    m_verticalRuler = new VpRuler(this, VpRuler::Vertical);
 
     m_horizontalRuler->setMouseTrack(true);
     m_verticalRuler->setMouseTrack(true);

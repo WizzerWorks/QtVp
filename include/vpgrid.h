@@ -28,9 +28,9 @@
 #include <QObject>
 
 // Include QtVp header files.
-#include "autypes.h"
+#include "vptypes.h"
 #include "vpcoord.h"
-#include "aucolor.h"
+#include "vpcolor.h"
 
 // Forward references.
 class VpGC;
@@ -48,7 +48,7 @@ class VpGrid : public QObject
 
     Q_PROPERTY(State state READ getState WRITE setState)
     Q_PROPERTY(Style style READ getStyle WRITE setStyle)
-    Q_PROPERTY(AuColor color READ getColor WRITE setColor)
+    Q_PROPERTY(VpColor color READ getColor WRITE setColor)
     Q_PROPERTY(int xSpacing READ getXSpacing WRITE setXSpacing)
     Q_PROPERTY(int ySpacing READ getYSpacing WRITE setYSpacing)
     Q_PROPERTY(int multiplier READ getMultiplier WRITE setMultiplier)
@@ -58,7 +58,7 @@ class VpGrid : public QObject
     Q_PROPERTY(int yResolution READ getYResolution WRITE setYResolution)
     Q_PROPERTY(RefState referenceState READ getReferenceState WRITE setReferenceState)
     Q_PROPERTY(RefStyle referenceStyle READ getReferenceStyle WRITE setReferenceStyle)
-    Q_PROPERTY(AuColor referenceColor READ getReferenceColor WRITE setReferenceColor)
+    Q_PROPERTY(VpColor referenceColor READ getReferenceColor WRITE setReferenceColor)
 
   public:
 
@@ -79,8 +79,8 @@ class VpGrid : public QObject
     void setState(State value) { m_state = value; }
     Style getStyle() { return m_style; }
     void setStyle(Style value) { m_style = value; }
-    AuColor &getColor() { return m_color; }
-    void setColor(const AuColor &value) { m_color = value; }
+    VpColor &getColor() { return m_color; }
+    void setColor(const VpColor &value) { m_color = value; }
     int  getXSpacing() { return m_xSpacing; }
     void setXSpacing(int value) { m_xSpacing = value; }
     int  getYSpacing() { return m_ySpacing; }
@@ -99,8 +99,8 @@ class VpGrid : public QObject
     void setReferenceState(RefState value) { m_referenceState = value; }
     RefStyle getReferenceStyle() { return m_referenceStyle; }
     void setReferenceStyle(RefStyle value) { m_referenceStyle = value; }
-    AuColor &getReferenceColor() { return m_referenceColor; }
-    void setReferenceColor(const AuColor &value) { m_referenceColor = value; }
+    VpColor &getReferenceColor() { return m_referenceColor; }
+    void setReferenceColor(const VpColor &value) { m_referenceColor = value; }
 
     /**
      * Snap the specified coordinate to a grid location.
@@ -213,7 +213,7 @@ class VpGrid : public QObject
 
     State   m_state;
     Style   m_style;
-    AuColor m_color;
+    VpColor m_color;
     int     m_xSpacing;
     int     m_ySpacing;
     int     m_multiplier;
@@ -224,7 +224,7 @@ class VpGrid : public QObject
 
     RefState m_referenceState;
     RefStyle m_referenceStyle;
-    AuColor  m_referenceColor;
+    VpColor  m_referenceColor;
 
 };
 
@@ -236,10 +236,10 @@ struct GridState
     int              m_multiplier;
     VpGrid::State    m_state;
     VpGrid::Style    m_style;
-    AuColor          m_color;
+    VpColor          m_color;
     VpGrid::RefState m_referenceState;
     VpGrid::RefStyle m_referenceStyle;
-    AuColor          m_referenceColor;
+    VpColor          m_referenceColor;
     VpCoord          m_alignment;
 };
 

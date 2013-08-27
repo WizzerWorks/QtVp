@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
     // Switch from splash state to main window.
     MainWindow mainWindow;
-    SplashUtil::sleep(3); // Splash page is shown for 3 seconds.
+    //SplashUtil::sleep(3); // Splash page is shown for 3 seconds.
 
     mainWindow.show();
     splash->finish(&mainWindow);

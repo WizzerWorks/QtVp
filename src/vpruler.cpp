@@ -25,10 +25,10 @@
 #include <QSize>
 
 // Include QtVp header files.
-#include "auruler.h"
+#include "vpruler.h"
 
 
-AuRuler::AuRuler(QWidget* parent, RulerType rulerType)
+VpRuler::VpRuler(QWidget* parent, RulerType rulerType)
     : QWidget(parent), m_rulerType(rulerType), m_origin(0.), m_rulerUnit(1.), m_rulerZoom(1.), m_mouseTracking(false), m_drawText(false)
 {
     setMouseTracking(true);
@@ -37,36 +37,36 @@ AuRuler::AuRuler(QWidget* parent, RulerType rulerType)
     setFont(txtFont);
 }
 
-AuRuler::~AuRuler()
+VpRuler::~VpRuler()
 {
 }
 
-QSize AuRuler::minimumSizeHint() const
+QSize VpRuler::minimumSizeHint() const
 {
     return QSize(RULER_BREADTH, RULER_BREADTH);
 }
 
-AuRuler::RulerType AuRuler::rulerType() const
+VpRuler::RulerType VpRuler::rulerType() const
 {
     return m_rulerType;
 }
 
-qreal AuRuler::origin() const
+qreal VpRuler::origin() const
 {
     return m_origin;
 }
 
-qreal AuRuler::rulerUnit() const
+qreal VpRuler::rulerUnit() const
 {
     return m_rulerUnit;
 }
 
-qreal AuRuler::rulerZoom() const
+qreal VpRuler::rulerZoom() const
 {
     return m_rulerZoom;
 }
 
-void AuRuler::setOrigin(const qreal origin)
+void VpRuler::setOrigin(const qreal origin)
 {
     if (m_origin != origin)
     {
@@ -75,7 +75,7 @@ void AuRuler::setOrigin(const qreal origin)
     }
 }
 
-void AuRuler::setRulerUnit(const qreal rulerUnit)
+void VpRuler::setRulerUnit(const qreal rulerUnit)
 {
     if (m_rulerUnit != rulerUnit)
     {
@@ -84,7 +84,7 @@ void AuRuler::setRulerUnit(const qreal rulerUnit)
     }
 }
 
-void AuRuler::setRulerZoom(const qreal rulerZoom)
+void VpRuler::setRulerZoom(const qreal rulerZoom)
 {
     if (m_rulerZoom != rulerZoom)
     {
@@ -93,14 +93,14 @@ void AuRuler::setRulerZoom(const qreal rulerZoom)
     }
 }
 
-void AuRuler::setCursorPos(const QPoint cursorPos)
+void VpRuler::setCursorPos(const QPoint cursorPos)
 {
     m_cursorPos = this->mapFromGlobal(cursorPos);
     m_cursorPos += QPoint(RULER_BREADTH,RULER_BREADTH);
     update();
 }
 
-void AuRuler::setMouseTrack(const bool track)
+void VpRuler::setMouseTrack(const bool track)
 {
     if (m_mouseTracking != track)
     {
@@ -109,14 +109,14 @@ void AuRuler::setMouseTrack(const bool track)
     }
 }
 
-void AuRuler::mouseMoveEvent(QMouseEvent* event)
+void VpRuler::mouseMoveEvent(QMouseEvent* event)
 {
     m_cursorPos = event->pos();
     update();
     QWidget::mouseMoveEvent(event);
 }
 
-void AuRuler::paintEvent(QPaintEvent* event)
+void VpRuler::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
     painter.setRenderHints(QPainter::TextAntialiasing | QPainter::HighQualityAntialiasing);
@@ -151,7 +151,7 @@ void AuRuler::paintEvent(QPaintEvent* event)
     painter.drawLine(starPt,endPt);
 }
 
-void AuRuler::drawAScaleMeter(QPainter* painter, QRectF rulerRect, qreal scaleMeter, qreal startPosition)
+void VpRuler::drawAScaleMeter(QPainter* painter, QRectF rulerRect, qreal scaleMeter, qreal startPosition)
 {
     // Flagging whether we are horizontal or vertical only to reduce
     // to cheching many times.
@@ -184,7 +184,7 @@ void AuRuler::drawAScaleMeter(QPainter* painter, QRectF rulerRect, qreal scaleMe
     }
 }
 
-void AuRuler::drawFromOriginTo(QPainter* painter, QRectF rulerRect, qreal startMark, qreal endMark, int startTickNo, qreal step, qreal startPosition)
+void VpRuler::drawFromOriginTo(QPainter* painter, QRectF rulerRect, qreal startMark, qreal endMark, int startTickNo, qreal step, qreal startPosition)
 {
     bool isHorzRuler = Horizontal == m_rulerType;
     int iterate = 0;
@@ -205,7 +205,7 @@ void AuRuler::drawFromOriginTo(QPainter* painter, QRectF rulerRect, qreal startM
     }
 }
 
-void AuRuler::drawMousePosTick(QPainter* painter)
+void VpRuler::drawMousePosTick(QPainter* painter)
 {
     if (m_mouseTracking)
     {

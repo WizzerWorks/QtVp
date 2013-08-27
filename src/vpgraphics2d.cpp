@@ -33,8 +33,8 @@
 #include <QMutex>
 
 // Include QtVp header files.
-#include "autypes.h"
-#include "auutil.h"
+#include "vptypes.h"
+#include "vputil.h"
 #include "vpgraphics2d.h"
 #include "vpgc.h"
 
@@ -56,6 +56,8 @@ VpGraphics2D::VpGraphics2D(QWidget *parent)
     m_2dPixelWidth = 0;
     m_2dPixelHeight = 0;
     m_2dGrid = new VpGrid();
+
+    m_painter = new QPainter();
 
     // Enable mouse tracking.
     setMouseTracking(true);
@@ -157,10 +159,10 @@ bool VpGraphics2D::adjustExtentToViewport(
     }
 
     // Save world coordinates of VISIBLE viewport.
-    vp.setWxmin(AuUtil::round(tmpWxmin));
-    vp.setWxmax(AuUtil::round(tmpWxmax));
-    vp.setWymin(AuUtil::round(tmpWymin));
-    vp.setWymax(AuUtil::round(tmpWymax));
+    vp.setWxmin(VpUtil::round(tmpWxmin));
+    vp.setWxmax(VpUtil::round(tmpWxmax));
+    vp.setWymin(VpUtil::round(tmpWymin));
+    vp.setWymax(VpUtil::round(tmpWymax));
 
     // Calculate and save viewport offsets and scaling factors for general
     // bookkeeping of the viewport record structure - used in scaling
@@ -232,8 +234,8 @@ void VpGraphics2D::worldToDev(int *x, int *y)
     fx = ((*x) * getXScale()) + getXOffset();
     fy = ((*y) * getYScale()) + getYOffset();
 
-    *x = AuUtil::round(fx);
-    *y = AuUtil::round(fy);
+    *x = VpUtil::round(fx);
+    *y = VpUtil::round(fy);
 }
 
 void VpGraphics2D::devToWorld(int *x, int *y)
@@ -245,8 +247,8 @@ void VpGraphics2D::devToWorld(int *x, int *y)
     fx = ((*x) - getXOffset()) / getXScale();
     fy = ((*y) - getYOffset()) / getYScale();
 
-    *x = AuUtil::round(fx);
-    *y = AuUtil::round(fy);
+    *x = VpUtil::round(fx);
+    *y = VpUtil::round(fy);
 }
 
 QRect *VpGraphics2D::worldToDevRect(int xmin, int ymin, int xmax, int ymax)
@@ -273,14 +275,14 @@ QRect *VpGraphics2D::worldToDevRect(int xmin, int ymin, int xmax, int ymax)
 
 void VpGraphics2D::scaleWorldToDev(int *x, int *y)
 {
-    *x = AuUtil::round((float)(*x) * getXScale());
-    *y = AuUtil::round((float)(*y) * getYScale());
+    *x = VpUtil::round((float)(*x) * getXScale());
+    *y = VpUtil::round((float)(*y) * getYScale());
 }
 
 void VpGraphics2D::scaleDevToWorld(int *x, int *y)
 {
-    *x = AuUtil::round((float)(*x) / getXScale());
-    *y = AuUtil::round((float)(*y) / getYScale());
+    *x = VpUtil::round((float)(*x) / getXScale());
+    *y = VpUtil::round((float)(*y) / getYScale());
 }
 
 bool VpGraphics2D::intersectWorld(VpGraphics2D &vp, int xll, int yll, int xur, int yur)
@@ -602,16 +604,18 @@ bool VpGraphics2D::displayGrid(VpGC *gc)
         if (drawGrid(gc) == false)
         {
             QString msg(getName());
-            msg.append(tr(" : grid is too fine to be displayed.\n"));
+            msg.append(tr(" : grid is too fine to be displayed."));
+            // TODO: The following updateStatus causes an exception to be thrown in
+            // drawGridReference below. Fix it.
             emit updateStatus(msg);
-            //gDebug(msg.toLocal8Bit().data());
+            //qDebug(msg.toLocal8Bit().data());
             retValue = false;
         }
     }
 
     // Display the grid reference regardless of whether the grid
     // is successfully displayed.
-    if (m_2dGrid->isReferenceOn())
+    if ((retValue == true) && m_2dGrid->isReferenceOn())
         drawGridReference(gc);
 
     return(retValue);
@@ -648,7 +652,7 @@ void VpGraphics2D::updateGrid(VpGC *gc, const GridState &dispState)
     VpGrid::State state;
     VpGrid::Style style;
     int xSpacing, ySpacing, multiplier;
-    AuColor color;
+    VpColor color;
     int xAlignment,yAlignment;
     bool statusChanged = false;
 
@@ -741,7 +745,7 @@ void VpGraphics2D::updateGridReference(VpGC *gc, const GridState &dispState)
     // Declare local variables.
     VpGrid::RefState state;
     VpGrid::RefStyle style;
-    AuColor color;
+    VpColor color;
     bool statusChanged = false;
 
     if (dispState.m_referenceState != VpGrid::REFSTATE_UNKNOWN)
@@ -846,8 +850,11 @@ void VpGraphics2D::clear()
     // Get the size of the available drawing area.
     QRect clientArea = rect();
 
-    QPainter gc(this);
-    gc.eraseRect(clientArea);
+    //QPainter gc(this);
+    //gc.eraseRect(clientArea);
+    m_painter->begin(this);
+    m_painter->eraseRect(clientArea);
+    m_painter->end();
 }
 
 QMutex mutex;
@@ -855,9 +862,15 @@ QMutex mutex;
 void VpGraphics2D::resizeEvent(QResizeEvent *event)
 {
     int x_min, y_min, x_max, y_max;
+    int Sx_min, Sy_min, Sx_max, Sy_max;
 
     //qDebug("VpGraphics2D: Resize event.");
     QMutexLocker locker(&mutex);
+
+    Sx_min = getPxmin();
+    Sx_max = getPxmax();
+    Sy_min = getPymin();
+    Sy_max = getPymax();
 
     // Initialize extent of physical coordinate system.
     QSize size = event->size();
@@ -880,90 +893,12 @@ void VpGraphics2D::resizeEvent(QResizeEvent *event)
         setWorldCoords(x_min, y_min, x_max, y_max);
     } else
     {
-        bool sh_x, sh_y;
-
-        int dx = event->size().width() - event->oldSize().width();
-        int dy = event->size().height() - event->oldSize().height();
-        float xscale = (float) event->size().width() / (float) event->oldSize().width();
-        float yscale = (float) event->size().height() / (float) event->oldSize().height();
-        if (dx >= 0) sh_x = false; else sh_x = true;
-        if (dy >= 0) sh_y = false; else sh_y = true;
-
-        /*
-        int px_min, px_max, py_min, py_max;
-        int wx_min = getWxmin();
-        int wx_max = getWxmax();
-        int wy_min = getWymin();
-        int wy_max = getWymax();
-        worldToDev(&wx_min, &wy_min);
-        worldToDev(&wx_max, &wy_max);
-        if (dx >= 0) { px_min = wx_min - AuUtil::round(dx/2); px_max = wx_max + AuUtil::round(dx/2); }
-        else { px_min = wx_min + AuUtil::round(dx/2); px_max = wx_max - AuUtil::round(dx/2); }
-        if (dy >= 0) { py_min = wy_min - AuUtil::round(dy/2); py_max = wy_max + AuUtil::round(dy/2); }
-        else { py_min = wy_min + AuUtil::round(dy/2); py_max = wy_max - AuUtil::round(dy/2); }
-        devToWorld(&px_min, &py_min);
-        devToWorld(&px_max, &py_max);
-        */
-
-        int halfdx = AuUtil::round(dx/2);
-        int halfdy = AuUtil::round(dy/2);
-        //scaleDevToWorld(&dx, &dy);
-        scaleDevToWorld(&halfdx, &halfdy);
-        //dx = abs(dx); dy = abs(dy);
-
-        // Scale world coordinate system.
-        /*
-        if (! sh_x) { x_min = getWxmin() - AuUtil::round(dx/2); x_max = getWxmax() + AuUtil::round(dx/2); }
-        else { x_min = getWxmin() + AuUtil::round(dx/2); x_max = getWxmax() - AuUtil::round(dx/2); }
-        if (! sh_y) { y_min = getWymin() - AuUtil::round(dy/2); y_max = getWymax() + AuUtil::round(dy/2); }
-        else { y_min = getWymin() + AuUtil::round(dy/2); y_max = getWymax() - AuUtil::round(dy/2); }
-        */
-        float tx_min, ty_min, tx_max, ty_max;
-        if (! sh_x)
-        {
-            // Increasing x.
-            tx_min = getWxmin() - halfdx;
-            tx_max = getWxmax() + halfdx;
-            if (! sh_y)
-            {
-                // Increasing y.
-                ty_min = getWymin() - halfdy;
-                ty_max = getWymax() + halfdy;
-            } else
-            {
-                // Decreasing y.
-                ty_min = getWymin() + halfdy + 1;
-                ty_max = getWymax() - halfdy - 1;
-            }
-        } else
-        {
-            // Decreasing x.
-            tx_min = getWxmin() - halfdx + 1;
-            tx_max = getWxmax() + halfdx - 1;
-            if (! sh_y)
-            {
-                // Increasing y.
-                ty_min = getWymin() - halfdy;
-                ty_max = getWymax() + halfdy;
-            } else
-            {
-                // Decreasing y.
-                ty_min = getWymin() + halfdy + 1;
-                ty_max = getWymax() - halfdy - 1;
-            }
-        }
-        x_min = AuUtil::round(tx_min);
-        y_min = AuUtil::round(ty_min);
-        x_max = AuUtil::round(tx_max);
-        y_max = AuUtil::round(ty_max);
-
-        /*
+        // Set existing world coordinate extent to new
+        // resized, physical coordinat extent.
         x_min = getWxmin();
-        x_max = AuUtil::round(getWxmin() + (xscale * (getWxmax() - getWxmin())));
+        x_max = getWxmax();
         y_min = getWymin();
-        y_max = AuUtil::round(getWymin() + (yscale * (getWymax() - getWymin())));
-        */
-
+        y_max = getWymax();
         setWorldCoords(x_min, y_min, x_max, y_max);
     }
 }
@@ -974,19 +909,31 @@ void VpGraphics2D::paintEvent(QPaintEvent *event)
     QMutexLocker locker(&mutex);
 
     // Clear the viewport.
-    //setBackground(new Color(255, 255, 255));
     clear();
 
+    // Create the Qt graphics context.
+    QPainter *gc = m_painter;
+    gc->begin(this);
+
+    // Set world coordinate extent.
+    QRect extent;
+    extent.setLeft(getWxmin());
+    extent.setRight(getWxmax());
+    extent.setTop(getWymax());
+    extent.setBottom(getWymin());
+    m_painter->setWindow(extent);
+
+    // Set up the viewport context.
+    VpGC vpgc;
+    vpgc.setViewport(this);
+    vpgc.setGC(gc);
+
     // Erase the previous grid.
-    //eraseGrid(m_gc);
+    //eraseGrid(vpgc);
 
     // Display the grid.
-    VpGC gc;
-    gc.setViewport(this);
-    gc.setGC(this);
-
     //m_vp.getGrid().setColor(new AuColor(0, 0, 255));
-    if (displayGrid(&gc))
+    if (displayGrid(&vpgc))
     {
         /*
         QString msg(getName());
@@ -994,6 +941,9 @@ void VpGraphics2D::paintEvent(QPaintEvent *event)
         emit updateStatus(msg);
         */
     }
+
+    // Complete painting.
+    gc->end();
 }
 
 bool VpGraphics2D::eventFilter(QObject *obj, QEvent *ev)

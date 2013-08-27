@@ -21,22 +21,22 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // COPYRIGHT_END
 
+#ifndef __VPCOLOR_H_
+#define __VPCOLOR_H_
+
+// Include Qt header files.
+#include <QColor>
+
 // Include QtVp header files.
-#include "aucolor.h"
+#include "vptypes.h"
 
-AuColor::AuColor()
-  : QColor(0, 0, 0, 255)
+class VpColor : public QColor
 {
-    // Do nothing extra.
-}
+  public:
 
-AuColor::AuColor(QColor color)
-    : QColor(color)
-{
-    // Do nothing extra.
-}
+    VpColor();
+    VpColor(QColor color);
+    virtual ~VpColor();
+};
 
-AuColor::~AuColor()
-{
-    // Do nothing.
-}
+#endif // __VPCOLOR_H_
