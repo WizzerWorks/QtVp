@@ -24,10 +24,14 @@
 #ifndef __VPGC_H_
 #define __VPGC_H_
 
+// Include QtVp header files.
+#include "qtvp_global.h"
+
+// Forward declarations.
 class QPainter;
 class VpViewport;
 
-class VpGC
+class QTVPSHARED_EXPORT VpGC
 {
   public:
 

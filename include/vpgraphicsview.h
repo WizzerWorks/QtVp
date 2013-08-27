@@ -28,9 +28,10 @@
 #include <QScrollArea>
 
 // Include QtVp header files.
+#include "qtvp_global.h"
 #include "vpruler.h"
 
-class VpGraphicsView : public QScrollArea
+class QTVPSHARED_EXPORT VpGraphicsView : public QScrollArea
 {
     Q_OBJECT
 

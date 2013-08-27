@@ -4,7 +4,10 @@
 #ifndef __VPUTIL_H_
 #define __VPUTIL_H_
 
-class VpUtil
+// Include QtVp header files.
+#include "qtvp_global.h"
+
+class QTVPSHARED_EXPORT VpUtil
 {
   public:
 

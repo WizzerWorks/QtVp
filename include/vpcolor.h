@@ -28,9 +28,10 @@
 #include <QColor>
 
 // Include QtVp header files.
+#include "qtvp_global.h"
 #include "vptypes.h"
 
-class VpColor : public QColor
+class QTVPSHARED_EXPORT VpColor : public QColor
 {
   public:
 

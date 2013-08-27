@@ -27,7 +27,8 @@
 // Include Qt header files.
 #include <QObject>
 
-// Include Viewport header files.
+// Include QtVp header files.
+#include "qtvp_global.h"
 #include "vptypes.h"
 #include "vpcoord.h"
 #include "vpgrid.h"
@@ -46,7 +47,7 @@ class QRubberBand;
  *
  * @author Mark S. Millard
  */
-class VpGraphics2D : public VpViewport
+class QTVPSHARED_EXPORT VpGraphics2D : public VpViewport
 {
     Q_OBJECT
 

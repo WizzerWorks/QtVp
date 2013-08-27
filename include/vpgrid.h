@@ -28,6 +28,7 @@
 #include <QObject>
 
 // Include QtVp header files.
+#include "qtvp_global.h"
 #include "vptypes.h"
 #include "vpcoord.h"
 #include "vpcolor.h"
@@ -37,7 +38,7 @@ class VpGC;
 struct GridState;
 struct GridContext;
 
-class VpGrid : public QObject
+class QTVPSHARED_EXPORT VpGrid : public QObject
 {
     Q_OBJECT
 

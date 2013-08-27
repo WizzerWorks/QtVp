@@ -28,6 +28,7 @@
 #include <QDialog>
 
 // Include QtVp header files.
+#include "qtvp_global.h"
 #include "vpgrid.h"
 
 
@@ -35,7 +36,7 @@ namespace Ui {
 class VpGridDialog;
 }
 
-class VpGridDialog : public QDialog
+class QTVPSHARED_EXPORT VpGridDialog : public QDialog
 {
     Q_OBJECT
 

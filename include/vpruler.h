@@ -27,9 +27,12 @@
 // Include Qt header files.
 #include <QtWidgets>
 
+// Include QtVp header files.
+#include "qtvp_global.h"
+
 #define RULER_BREADTH 20
 
-class VpRuler : public QWidget
+class QTVPSHARED_EXPORT VpRuler : public QWidget
 {
     Q_OBJECT
 

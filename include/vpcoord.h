@@ -25,11 +25,12 @@
 #define __VPCOORD_H_
 
 // Include QtVp header files.
+#include "qtvp_global.h"
 #include "vptypes.h"
 
 class QString;
 
-class VpCoord
+class QTVPSHARED_EXPORT VpCoord
 {
   public:
 

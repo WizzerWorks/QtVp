@@ -3,13 +3,13 @@ QT += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = QtVp
-TEMPLATE = app
+TEMPLATE = lib
+
+DEFINES += QTVP_LIBRARY
 
 INCLUDEPATH = include
 
-SOURCES += src/main.cpp\
-    src/mainwindow.cpp \
-    src/vpruler.cpp \
+SOURCES += src/vpruler.cpp \
     src/vpcolor.cpp \
     src/vputil.cpp \
     src/vpcoord.cpp \
@@ -20,8 +20,7 @@ SOURCES += src/main.cpp\
     src/vpgriddialog.cpp \
     src/vpgraphicsview.cpp
 
-HEADERS += include/mainwindow.h \
-    include/vpcoord.h \
+HEADERS += include/vpcoord.h \
     include/vpgc.h \
     include/vpviewport.h \
     include/vpgraphics2d.h \
@@ -31,10 +30,18 @@ HEADERS += include/mainwindow.h \
     include/vputil.h \
     include/vptypes.h \
     include/vpruler.h \
-    include/vpcolor.h
+    include/vpcolor.h \
+    include/qtvp_global.h
 
-FORMS   += src/mainwindow.ui \
-    src/vpgriddialog.ui
+FORMS   += src/vpgriddialog.ui
 
-RESOURCES += \
-    QtVp.qrc
+RESOURCES +=
+
+unix:!symbian {
+    maemo5 {
+        target.path = /opt/usr/lib
+    } else {
+        target.path = /usr/lib
+    }
+    INSTALLS += target
+}
