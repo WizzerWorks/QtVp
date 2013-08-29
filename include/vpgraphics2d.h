@@ -262,14 +262,16 @@ class QTVPSHARED_EXPORT VpGraphics2D : public VpViewport
     /**
      * @brief Signal that world coordinate has changed.
      *
-     * @param coord The world coordinate in the form "(x,y,vpname)".
-     * <b>x</b> is the x position of the coordinate. <b>y</b> is the
-     * y position of the coordinate. <b>vpname</b> is the name of
-     * the viewport.
+     * @param coord The world coordinate.
      */
-    void coordChanged(const QString &coord);
+    void coordChanged(const VpCoord &coord);
 
-    void updateStatus(const QString &coord);
+    /**
+     * @brief Signal that the status msg has changed.
+     *
+     * @param msg The message to update.
+     */
+    void updateStatus(const QString &msg);
 
   protected slots:
 

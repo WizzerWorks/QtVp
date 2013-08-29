@@ -42,7 +42,7 @@ VpCoord::VpCoord(const VpCoord &coord)
     m_x = coord.m_x;
     m_y = coord.m_y;
     m_z = coord.m_z;
-    m_vpName = coord.m_vpName;
+    m_name = coord.m_name;
 }
 
 VpCoord::~VpCoord()
@@ -64,9 +64,9 @@ const QString VpCoord::toString()
 {
     char buffer[64];
 
-    if (m_vpName.isNull() || m_vpName.isEmpty()) {
+    if (m_name.isNull() || m_name.isEmpty()) {
         // Add the viewport name as part of the coordinate string.
-        sprintf_s(buffer, "(%d,%d,%d,%s)", m_x, m_y, m_z, m_vpName.toUtf8());
+        sprintf_s(buffer, "(%d,%d,%d,%s)", m_x, m_y, m_z, m_name.toUtf8());
     } else {
         // Else close off the coordinate string.
         sprintf_s(buffer, "(%d,%d,%d)", m_x, m_y, m_z);
@@ -83,7 +83,7 @@ VpCoord & VpCoord::operator=(const VpCoord & coord)
         m_x = coord.m_x;
         m_y = coord.m_y;
         m_z = coord.m_z;
-        m_vpName = coord.m_vpName;
+        m_name = coord.m_name;
     }
 
     // By convention, always return *this.
@@ -97,7 +97,7 @@ bool VpCoord::operator==(const VpCoord & coord) const
     if (this != &coord)
     {
         if ((m_x == coord.m_x) && (m_y == coord.m_y) &&
-            (m_z == coord.m_z) && (m_vpName == coord.m_vpName))
+            (m_z == coord.m_z) && (m_name == coord.m_name))
             retValue = true;
         else
             retValue = false;
@@ -113,7 +113,7 @@ bool VpCoord::operator!=(const VpCoord & coord) const
     if (this != &coord)
     {
         if ((m_x != coord.m_x) || (m_y != coord.m_y) ||
-            (m_z != coord.m_z) || (m_vpName != coord.m_vpName))
+            (m_z != coord.m_z) || (m_name != coord.m_name))
             retValue = true;
         else
             retValue = false;

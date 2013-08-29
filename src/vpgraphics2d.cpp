@@ -952,8 +952,8 @@ bool VpGraphics2D::eventFilter(QObject *obj, QEvent *ev)
     {
         if (ev->type() == QEvent::Leave)
         {
-            QString coord("");
-            emit coordChanged(coord);
+            QString msg("");
+            emit updateStatus(msg);
             return true;
         } else {
             return false;
@@ -1068,9 +1068,7 @@ void VpGraphics2D::mouseMoveEvent(QMouseEvent *event)
 
 void VpGraphics2D::processCoord(const QMouseEvent &event)
 {
-    static char coord_buf[100];
     int scrx, scry;
-    float f_scrx, f_scry;
 
     //qDebug("VpGraphics2D: Processing viewport coordinate.");
 
@@ -1084,16 +1082,10 @@ void VpGraphics2D::processCoord(const QMouseEvent &event)
     if (m_2dGrid->getState() != VpGrid::STATE_OFF)
         snapToGrid(&scrx, &scry);
 
-    f_scrx = ((float) scrx)/((float) VpCoord::getResolution());
-    f_scry = ((float) scry)/((float) VpCoord::getResolution());
-    QString name = getName();
-    if ((name.isNull()) || (name.isEmpty())) {
-        sprintf_s(coord_buf,"(%.2lf,%.2lf)", f_scrx, f_scry);
-    } else {
-        QByteArray ba = name.toLocal8Bit();
-        sprintf_s(coord_buf,"(%.2lf,%.2lf,%s)", f_scrx, f_scry, ba.data());
-    }
-    QString coord(coord_buf);
+    VpCoord coord;
+    coord.setX(scrx);
+    coord.setY(scry);
+    coord.setName(m_name);
 
     emit coordChanged(coord);
 }

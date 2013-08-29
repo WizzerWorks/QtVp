@@ -76,7 +76,7 @@ class VpViewport : public QWidget
 
   public slots:
 
-  private:
+  protected:
 
     Mode m_mode;    // The IO mode the Viewport is configured for.
 

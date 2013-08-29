@@ -111,6 +111,10 @@ class QTVPSHARED_EXPORT VpCoord
      */
     void setZ(const int value) { m_z = value; }
 
+    QString getName() { return m_name; }
+
+    void setName(const QString name) { m_name = name; }
+
     /**
      * Formats the coordinate as (x,y,z,vpname).
      *
@@ -177,7 +181,7 @@ class QTVPSHARED_EXPORT VpCoord
     /** The z component of the coordinate. Defaults to <b>0</b>. */
     int m_z;
     /** The name of the associated <code>Viewport</code>. */
-    QString m_vpName;
+    QString m_name;
 
   private:
 
