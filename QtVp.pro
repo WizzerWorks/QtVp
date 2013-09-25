@@ -18,7 +18,8 @@ SOURCES += src/vpruler.cpp \
     src/vpgraphics2d.cpp \
     src/vpgrid.cpp \
     src/vpgriddialog.cpp \
-    src/vpgraphicsview.cpp
+    src/vpgraphicsview.cpp \
+    src/gridgc.cpp
 
 HEADERS += include/vpcoord.h \
     include/vpgc.h \
@@ -31,7 +32,8 @@ HEADERS += include/vpcoord.h \
     include/vptypes.h \
     include/vpruler.h \
     include/vpcolor.h \
-    include/qtvp_global.h
+    include/qtvp_global.h \
+    include/gridgc.h
 
 FORMS   += src/vpgriddialog.ui
 

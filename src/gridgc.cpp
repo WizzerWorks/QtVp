@@ -21,41 +21,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // COPYRIGHT_END
 
-#ifndef __VPGRAPHICSVIEW_H_
-#define __VPGRAPHICSVIEW_H_
-
-// Include Qt header files.
-#include <QScrollArea>
-
 // Include QtVp header files.
-#include "qtvp_global.h"
-#include "vpruler.h"
+#include "gridgc.h"
 
-class QTVPSHARED_EXPORT VpGraphicsView : public QScrollArea
+GridGC::GridGC()
 {
-    Q_OBJECT
+}
 
-  public:
-
-    explicit VpGraphicsView(QWidget *parent = 0);
-    virtual ~VpGraphicsView();
-
-    void init(QWidget *widget);
-
-  signals:
-    
-  public slots:
-
-    void on_newExtent(QRect size, QPoint origin);
-    void on_trackExtent(bool track);
-    
-  private:
-
-    /** Horizontal ruler. */
-    VpRuler *m_horizontalRuler;
-    /** Vertical ruler. */
-    VpRuler *m_verticalRuler;
-
-};
-
-#endif // __VPGRAPHICSVIEW_H_
+GridGC::~GridGC()
+{
+}

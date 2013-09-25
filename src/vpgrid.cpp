@@ -30,6 +30,7 @@
 #include "vpgrid.h"
 #include "vpgc.h"
 #include "vpgraphics2d.h"
+#include "gridgc.h"
 
 /*   The variable g_gridXResolution is an integer which the user may set to   */
 /*   specify the minumum distance (in pixels) between successive grid         */
@@ -123,7 +124,7 @@ bool VpGrid::isReferenceOn()
         return false;
 }
 
-void VpGrid::draw(GridContext &gridGC)
+void VpGrid::draw(GridGC &gridGC)
 {
     // Set up the display characteristics.
 
@@ -144,7 +145,7 @@ void VpGrid::draw(GridContext &gridGC)
     }
 }
 
-void VpGrid::drawLineGrid(GridContext &gridGC)
+void VpGrid::drawLineGrid(GridGC &gridGC)
 {
     int x,y;
     VpGC *vpgc = gridGC.m_gc;
@@ -185,7 +186,7 @@ void VpGrid::drawLineGrid(GridContext &gridGC)
     //delete gc;
 }
 
-void VpGrid::drawDotGrid(GridContext &gridGC)
+void VpGrid::drawDotGrid(GridGC &gridGC)
 {
     int x,y;
     VpGC *vpgc = gridGC.m_gc;
@@ -214,7 +215,7 @@ void VpGrid::drawDotGrid(GridContext &gridGC)
     //delete gc;
 }
 
-void VpGrid::drawCrossGrid(GridContext &gridGC)
+void VpGrid::drawCrossGrid(GridGC &gridGC)
 {
     int x,y;
     VpGC *vpgc = gridGC.m_gc;
@@ -248,7 +249,7 @@ void VpGrid::drawCrossGrid(GridContext &gridGC)
     //delete gc;
 }
 
- void VpGrid::drawReference(GridContext &gridGC)
+ void VpGrid::drawReference(GridGC &gridGC)
  {
      int x,y;
      VpGC *vpgc = gridGC.m_gc;

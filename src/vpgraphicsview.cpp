@@ -50,6 +50,8 @@ void VpGraphicsView::init(QWidget *widget)
 
     m_horizontalRuler->setMouseTrack(true);
     m_verticalRuler->setMouseTrack(true);
+    m_horizontalRuler->setExtentTrack(false);
+    m_verticalRuler->setExtentTrack(false);
 
     QWidget* placeholder = new QWidget();
     placeholder->setBackgroundRole(QPalette::Window);
@@ -60,4 +62,19 @@ void VpGraphicsView::init(QWidget *widget)
     gridLayout->addWidget(widget, 1, 1);
 
     setLayout(gridLayout);
+}
+
+void VpGraphicsView::on_newExtent(QRect size, QPoint origin)
+{
+    qDebug("VpGraphicsView: Received new extent.");
+    m_horizontalRuler->setExtent(size, origin);
+    m_verticalRuler->setExtent(size, origin);
+    m_horizontalRuler->update();
+    m_verticalRuler->update();
+}
+
+void VpGraphicsView::on_trackExtent(bool track)
+{
+    m_horizontalRuler->setExtentTrack(track);
+    m_verticalRuler->setExtentTrack(track);
 }

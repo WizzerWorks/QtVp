@@ -37,6 +37,7 @@
 #include "vputil.h"
 #include "vpgraphics2d.h"
 #include "vpgc.h"
+#include "gridgc.h"
 
 const int VpGraphics2D::MAX_WC_EXTENT = 0x7fffffff;
 const int VpGraphics2D::MIN_WC_EXTENT = -VpGraphics2D::MAX_WC_EXTENT;
@@ -221,6 +222,21 @@ bool VpGraphics2D::setWorldCoords(int xmin,int ymin,int xmax,int ymax)
     setPixelWidth(pixelwidth);
     setPixelHeight(pixelwidth);
 
+    // Signal that a new world coordinate extent is available.
+    QRect size;
+    //size.setLeft(Wc_xmin);
+    //size.setRight(Wc_xmax);
+    //size.setTop(Wc_ymin);
+    //size.setBottom(Wc_ymax);
+    size.setLeft(m_2dWxmin);
+    size.setRight(m_2dWxmax);
+    size.setTop(m_2dWymin);
+    size.setBottom(m_2dWymax);
+    QPoint origin;
+    origin.setX(m_2dGrid->getXAlignment());
+    origin.setY(m_2dGrid->getYAlignment());
+    emit newExtent(size, origin);
+
     return true;
 }
 
@@ -303,7 +319,7 @@ bool VpGraphics2D::drawGrid(VpGC *gc)
     int truexll, trueyll, truexur, trueyur;
     bool status;
     int count=0, xnum=0, ynum=0;
-    GridContext *gridGC = new GridContext();
+    GridGC *gridGC = new GridGC();
 
     // Set return point status for interrupts.
     /*
@@ -562,7 +578,7 @@ bool VpGraphics2D::drawGridReference(VpGC *gc)
 {
     // Declare local variables.
     int status = true;
-    GridContext *gridGC = new GridContext();
+    GridGC *gridGC = new GridGC();
 
     // Set return point status for interrupts.
     /*
@@ -891,6 +907,7 @@ void VpGraphics2D::resizeEvent(QResizeEvent *event)
         y_max = getPymax() * VpCoord::getResolution();
 
         setWorldCoords(x_min, y_min, x_max, y_max);
+
     } else
     {
         // Set existing world coordinate extent to new
@@ -901,6 +918,8 @@ void VpGraphics2D::resizeEvent(QResizeEvent *event)
         y_max = getWymax();
         setWorldCoords(x_min, y_min, x_max, y_max);
     }
+    qDebug() << "VpGraphics2d Physical: (" << getPxmin() << "," << getPymin() << ") - (" << getPxmax() << "," << getPymax() << ")";
+    qDebug() << "VpGraphics2d World: (" << getWxmin() << "," << getWymin() << ") - (" << getWxmax() << "," << getWymax() << ")";
 }
 
 void VpGraphics2D::paintEvent(QPaintEvent *event)

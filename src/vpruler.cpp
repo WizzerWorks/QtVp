@@ -26,10 +26,11 @@
 
 // Include QtVp header files.
 #include "vpruler.h"
-
+#include "vputil.h"
 
 VpRuler::VpRuler(QWidget* parent, RulerType rulerType)
-    : QWidget(parent), m_rulerType(rulerType), m_origin(0.), m_rulerUnit(1.), m_rulerZoom(1.), m_mouseTracking(false), m_drawText(false)
+    : QWidget(parent), m_rulerType(rulerType), m_origin(0.), m_rulerUnit(1.), m_rulerZoom(1.),
+      m_mouseTracking(false), m_drawText(false), m_extentTracking(false)
 {
     setMouseTracking(true);
     QFont txtFont("Goudy Old Style", 5,20);
@@ -118,14 +119,33 @@ void VpRuler::mouseMoveEvent(QMouseEvent* event)
 
 void VpRuler::paintEvent(QPaintEvent* event)
 {
+    bool isHorzRuler = Horizontal == m_rulerType;
+    QString str;
+    if (isHorzRuler) str.append(tr("Horizontal")); else str.append(tr("Vertical"));
+    qDebug() << str << "VpRuler Physical: (" << rect().left() << "," << rect().top() << ") - (" << rect().right() << "," << rect().bottom() << ")";
+    qDebug() << str << "VpRuler World: (" << m_Wxmin << "," << m_Wymin << ") - (" << m_Wxmax << "," << m_Wymax << ")";
+    qDebug() << str << "VpRuler Origin: (" << m_Wx << "," << m_Wy << ")";
+
     QPainter painter(this);
+    if (m_extentTracking) {
+        painter.setWindow(m_Wxmin, m_Wymin, m_Wxmax - m_Wxmin, m_Wymax - m_Wymin);
+        //painter.setWorldMatrixEnabled(true);
+        //painter.setViewport(rect().left(), rect().top(), rect().width(), rect().height());
+    }
     painter.setRenderHints(QPainter::TextAntialiasing | QPainter::HighQualityAntialiasing);
+
     QPen pen(Qt::black, 0); // zero width pen is cosmetic pen
     //pen.setCosmetic(true);
     painter.setPen(pen);
     // We want to work with floating point, so we are considering
     // the rect as QRectF
-    QRectF rulerRect = this->rect();
+    //QRectF rulerRect = this->rect();
+    QRectF rulerRect;
+    //rulerRect.setX(m_Wxmin);
+    //rulerRect.setY(m_Wymin);
+    //rulerRect.setWidth(m_Wxmax - m_Wxmin);
+    //rulerRect.setHeight(m_Wymax - m_Wymin);
+    rulerRect.setCoords(m_Wxmin, m_Wymin, m_Wxmax, m_Wymax);
     // at first fill the rect
     //painter.fillRect(rulerRect,QColor(220,200,180));
     painter.fillRect(rulerRect,QColor(236, 233, 216));
@@ -157,9 +177,9 @@ void VpRuler::drawAScaleMeter(QPainter* painter, QRectF rulerRect, qreal scaleMe
     // to cheching many times.
     bool isHorzRuler = Horizontal == m_rulerType;
     scaleMeter  = scaleMeter * m_rulerUnit * m_rulerZoom;
-    // Ruler rectangle starting mark
+    // Ruler rectangle starting mark.
     qreal rulerStartMark = isHorzRuler ? rulerRect.left() : rulerRect.top();
-    // Ruler rectangle ending mark
+    // Ruler rectangle ending mark.
     qreal rulerEndMark = isHorzRuler ? rulerRect.right() : rulerRect.bottom();
     // Condition A # If origin point is between the start & end mark,
     // we have to draw both from origin to left mark & origin to right mark.
@@ -209,8 +229,16 @@ void VpRuler::drawMousePosTick(QPainter* painter)
 {
     if (m_mouseTracking)
     {
-        QPoint starPt = m_cursorPos;
-        QPoint endPt;
+        qreal x = m_cursorPos.x();
+        qreal y = m_cursorPos.y();
+        devToWorld(&x, &y);
+
+        //QPoint starPt = m_cursorPos;
+        QPointF starPt;
+        starPt.setX(x);
+        starPt.setY(y);
+
+        QPointF endPt;
         if (Horizontal == m_rulerType)
         {
             starPt.setY(this->rect().top());
@@ -223,6 +251,101 @@ void VpRuler::drawMousePosTick(QPainter* painter)
             endPt.setX(this->rect().right());
             endPt.setY(starPt.y());
         }
-        painter->drawLine(starPt,endPt);
+        painter->drawLine(starPt, endPt);
     }
 }
+
+void VpRuler::setExtent(const QRect size, const QPoint origin)
+{
+    // If the extent is invalid, simply return.
+    if ((! size.isValid()) || size.isNull())
+    {
+        qDebug("Ruler extent: invalid rectangle.");
+        return;
+    }
+
+    m_Wx = origin.x();
+    m_Wy = origin.y();
+
+    bool isHorzRuler = Horizontal == m_rulerType;
+    if (isHorzRuler)
+    {
+        // Setting horizontal world extent.
+        m_Wxmin = size.left();
+        m_Wymin = 0;
+        m_Wxmax = size.right();
+        m_Wymax = this->rect().bottom();
+    } else
+    {
+        // Setting vertical world extent.
+        m_Wxmin = 0;
+        m_Wymin = size.top();
+        m_Wxmax = this->rect().right();
+        m_Wymax = size.bottom();
+    }
+
+    m_xscale = ((qreal) m_Wxmax - m_Wxmin) / ((qreal) this->rect().width());
+    m_yscale = ((qreal) m_Wymax - m_Wymin) / ((qreal) this->rect().height());
+    m_xoffset = (qreal) this->rect().left() - (((qreal) size.left()) * m_xscale);
+    m_yoffset = (qreal) this->rect().top() - (((qreal) size.top()) * m_yscale);
+    //m_xoffset = m_yoffset = 0;
+}
+
+void VpRuler::setExtentTrack(const bool track)
+{
+    if (m_extentTracking != track)
+    {
+        m_extentTracking = track;
+        update();
+    }
+}
+
+#if 0
+void VpRuler::worldToDev(int *x, int *y)
+{
+    // Declare local variables.
+    float fx, fy;
+
+    // Note that the result is int but the calculation is float.
+    fx = ((*x) * m_xscale) + m_xoffset;
+    fy = ((*y) * m_yscale) + m_yoffset;
+
+    *x = VpUtil::round(fx);
+    *y = VpUtil::round(fy);
+}
+
+void VpRuler::devToWorld(int *x, int *y)
+{
+    // Declare local variables.
+    float fx, fy;
+
+    fx = ((*x) - m_xoffset) / m_xscale;
+    fy = ((*y) - m_yoffset) / m_yscale;
+
+    *x = VpUtil::round(fx);
+    *y = VpUtil::round(fy);
+}
+#else
+void VpRuler::worldToDev(qreal *x, qreal *y)
+{
+    // Declare local variables.
+    qreal fx, fy;
+
+    // Note that the result is int but the calculation is float.
+    fx = ((*x) * m_xscale) + m_xoffset;
+    fy = ((*y) * m_yscale) + m_yoffset;
+
+    *x = fx; *y = fy;
+}
+
+void VpRuler::devToWorld(qreal *x, qreal *y)
+{
+    // Declare local variables.
+    qreal fx, fy;
+
+    fx = ((*x) - m_xoffset) / m_xscale;
+    fy = ((*y) - m_yoffset) / m_yscale;
+
+    *x = fx; *y = fy;
+}
+#endif

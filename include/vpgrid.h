@@ -36,7 +36,7 @@
 // Forward references.
 class VpGC;
 struct GridState;
-struct GridContext;
+struct GridGC;
 
 class QTVPSHARED_EXPORT VpGrid : public QObject
 {
@@ -141,14 +141,14 @@ class QTVPSHARED_EXPORT VpGrid : public QObject
      *
      * @param gridGC The grid context.
      */
-    void draw(GridContext &gridGC);
+    void draw(GridGC &gridGC);
 
     /**
      * @brief Draw the grid reference.
      *
-     * @param gridGC The grid context.
+     * @param gridgc The grid context.
      */
-    void drawReference(GridContext &gridGC);
+    void drawReference(GridGC &gridGC);
 
     static int getGridXResolution()
     { return g_gridXResolution; }
@@ -188,7 +188,7 @@ class QTVPSHARED_EXPORT VpGrid : public QObject
      *
      * @param gridGC The grid context.
      */
-    void drawLineGrid(GridContext &gridGC);
+    void drawLineGrid(GridGC &gridGC);
     
     /**
      * Draw the grid using dots.
@@ -198,7 +198,7 @@ class QTVPSHARED_EXPORT VpGrid : public QObject
      *
      * @param gridGC The grid context.
      */
-    void drawDotGrid(GridContext &gridGC);
+    void drawDotGrid(GridGC &gridGC);
 
     /**
      * Draw the grid using crosses.
@@ -208,7 +208,7 @@ class QTVPSHARED_EXPORT VpGrid : public QObject
      *
      * @param gridGC The grid context.
      */
-    void drawCrossGrid(GridContext &gridGC);
+    void drawCrossGrid(GridGC &gridGC);
 
   private:
 
@@ -242,23 +242,6 @@ struct GridState
     VpGrid::RefStyle m_referenceStyle;
     VpColor          m_referenceColor;
     VpCoord          m_alignment;
-};
-
-struct GridContext
-{
-    VpGC *m_gc;
-    int   m_xll;
-    int   m_yll;
-    int   m_xur;
-    int   m_yur;
-    int   m_truexll;
-    int   m_trueyll;
-    int   m_truexur;
-    int   m_trueyur;
-    int   m_xnum;
-    int   m_ynum;
-    int   m_dx;
-    int   m_dy;
 };
 
 #endif // __VPGRID_H_

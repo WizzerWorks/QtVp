@@ -60,6 +60,8 @@ class QTVPSHARED_EXPORT VpRuler : public QWidget
     void setRulerUnit(const qreal rulerUnit);
     void setRulerZoom(const qreal rulerZoom);
     void setCursorPos(const QPoint cursorPos);
+    void setExtent(const QRect size, const QPoint origin);
+    void setExtentTrack(const bool track);
     void setMouseTrack(const bool track);
 
   protected:
@@ -80,6 +82,21 @@ class QTVPSHARED_EXPORT VpRuler : public QWidget
     QPoint    m_cursorPos;
     bool      m_mouseTracking;
     bool      m_drawText;
+
+    void worldToDev(qreal *x, qreal *y);
+    void devToWorld(qreal *x, qreal *y);
+
+    bool      m_extentTracking;
+    qint32    m_Wxmin;
+    qint32    m_Wymin;
+    qint32    m_Wxmax;
+    qint32    m_Wymax;
+    qint32    m_Wx;
+    qint32    m_Wy;
+    qreal     m_xoffset;
+    qreal     m_yoffset;
+    qreal     m_xscale;
+    qreal     m_yscale;
 };
 
 #endif // __VPRULER_H_

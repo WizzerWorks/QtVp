@@ -260,6 +260,14 @@ class QTVPSHARED_EXPORT VpGraphics2D : public VpViewport
     void mouseReleased(const QMouseEvent &event);
 
     /**
+     * @brief Signal that the world coordinate extent has changed.
+     *
+     * @param size The new grid's extent.
+     * @param origin The new grid's origin.
+     */
+    void newExtent(const QRect &size, const QPoint &origin);
+
+    /**
      * @brief Signal that world coordinate has changed.
      *
      * @param coord The world coordinate.
