@@ -25,14 +25,15 @@
 #define __VPRULER_H_
 
 // Include Qt header files.
-#include <QtWidgets>
+#include <QObject>
 
 // Include QtVp header files.
-#include "qtvp_global.h"
+//#include "qtvp_global.h"
+#include "vpgraphics2d.h"
 
 #define RULER_BREADTH 20
 
-class QTVPSHARED_EXPORT VpRuler : public QWidget
+class QTVPSHARED_EXPORT VpRuler : public VpGraphics2D
 {
     Q_OBJECT
 
@@ -83,20 +84,9 @@ class QTVPSHARED_EXPORT VpRuler : public QWidget
     bool      m_mouseTracking;
     bool      m_drawText;
 
-    void worldToDev(qreal *x, qreal *y);
-    void devToWorld(qreal *x, qreal *y);
-
     bool      m_extentTracking;
-    qint32    m_Wxmin;
-    qint32    m_Wymin;
-    qint32    m_Wxmax;
-    qint32    m_Wymax;
-    qint32    m_Wx;
-    qint32    m_Wy;
-    qreal     m_xoffset;
-    qreal     m_yoffset;
-    qreal     m_xscale;
-    qreal     m_yscale;
+    qreal     m_Wx;
+    qreal     m_Wy;
 };
 
 #endif // __VPRULER_H_

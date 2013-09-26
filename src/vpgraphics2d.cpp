@@ -222,21 +222,6 @@ bool VpGraphics2D::setWorldCoords(int xmin,int ymin,int xmax,int ymax)
     setPixelWidth(pixelwidth);
     setPixelHeight(pixelwidth);
 
-    // Signal that a new world coordinate extent is available.
-    QRect size;
-    //size.setLeft(Wc_xmin);
-    //size.setRight(Wc_xmax);
-    //size.setTop(Wc_ymin);
-    //size.setBottom(Wc_ymax);
-    size.setLeft(m_2dWxmin);
-    size.setRight(m_2dWxmax);
-    size.setTop(m_2dWymin);
-    size.setBottom(m_2dWymax);
-    QPoint origin;
-    origin.setX(m_2dGrid->getXAlignment());
-    origin.setY(m_2dGrid->getYAlignment());
-    emit newExtent(size, origin);
-
     return true;
 }
 
@@ -866,8 +851,6 @@ void VpGraphics2D::clear()
     // Get the size of the available drawing area.
     QRect clientArea = rect();
 
-    //QPainter gc(this);
-    //gc.eraseRect(clientArea);
     m_painter->begin(this);
     m_painter->eraseRect(clientArea);
     m_painter->end();
@@ -878,15 +861,15 @@ QMutex mutex;
 void VpGraphics2D::resizeEvent(QResizeEvent *event)
 {
     int x_min, y_min, x_max, y_max;
-    int Sx_min, Sy_min, Sx_max, Sy_max;
+    //int Sx_min, Sy_min, Sx_max, Sy_max;
 
     //qDebug("VpGraphics2D: Resize event.");
     QMutexLocker locker(&mutex);
 
-    Sx_min = getPxmin();
-    Sx_max = getPxmax();
-    Sy_min = getPymin();
-    Sy_max = getPymax();
+    //Sx_min = getPxmin();
+    //Sx_max = getPxmax();
+    //Sy_min = getPymin();
+    //Sy_max = getPymax();
 
     // Initialize extent of physical coordinate system.
     QSize size = event->size();

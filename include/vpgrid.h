@@ -35,8 +35,9 @@
 
 // Forward references.
 class VpGC;
+class GridGC;
 struct GridState;
-struct GridGC;
+
 
 class QTVPSHARED_EXPORT VpGrid : public QObject
 {

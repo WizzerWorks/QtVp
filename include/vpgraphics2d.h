@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // COPYRIGHT_END
 
-#ifndef __AUGRAPHICS2D_H_
-#define __AUGRAPHICS2D_H_
+#ifndef __VPGRAPHICS2D_H_
+#define __VPGRAPHICS2D_H_
 
 // Include Qt header files.
 #include <QObject>
@@ -34,7 +34,6 @@
 #include "vpgrid.h"
 #include "vpviewport.h"
 #include "vpgc.h"
-#include "vpruler.h"
 
 // Forward declarations.
 class QRect;
@@ -320,7 +319,7 @@ class QTVPSHARED_EXPORT VpGraphics2D : public VpViewport
 
     bool eventFilter(QObject *obj, QEvent *ev);
 
-  private:
+  protected:
 
     int   m_2dWxmin;
     int   m_2dWymin;
@@ -348,4 +347,4 @@ class QTVPSHARED_EXPORT VpGraphics2D : public VpViewport
 
 };
 
-#endif // __AUGRAPHICS2D_H_
+#endif // __VPGRAPHICS2D_H_
